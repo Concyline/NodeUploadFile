@@ -1,5 +1,6 @@
 const express = require('express')
 const zip = require('express-zip');
+const mail = require('./mail')
 
 const app = express()
 const formidable = require('formidable')
@@ -91,6 +92,18 @@ app.get('/downloadzip/:name', function(req, res) {
     res.zip([
             { path: filePath+fileName, name: fileName}
         ])
+})
+
+app.get('/email',(req, res) => {
+
+    var mailOptions = {
+        from: 'concyinfo@gmail.com',
+        to: 'concyline@hotmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+      };
+
+    res.status(200).send(mail.send(mailOptions))
 })
 
 const PORT = process.env.PORT || 3000
